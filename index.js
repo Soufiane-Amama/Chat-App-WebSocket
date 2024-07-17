@@ -13,6 +13,7 @@ const server = app.listen(PORT, () => {
 // Socket setup & pass server
 const io = socket(server);
 
+
 io.on('connection', (socket) => { // حدث الاتصال
   console.log('made socket connection', socket.id);
   
@@ -23,9 +24,9 @@ io.on('connection', (socket) => { // حدث الاتصال
   });
   
   // Handle typing event
-  // socket.on('typing', (data) => {
-  //     socket.broadcast.emit('typing', data);
-  // });
+  socket.on('typing', (data) => { // استقبال اسم الشخص الذي يكتب..
+      socket.broadcast.emit('typing', data); // broadcast تقوم بالاستثناء .تعني ارسال اسم الشخص الذي يكتب الى كل العملاء المتصلين باستثناء الشخص الاصلي الذي يكتب.
+  });
 });
 
 
