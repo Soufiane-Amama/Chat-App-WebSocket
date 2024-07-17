@@ -1,5 +1,5 @@
 // Make connection
-var socket = io.connect('http://localhost:4000'); // io نقوم بجلبها من مكتبة socket.io-client في ملف index.html
+var socket = io.connect('https://chat-app-nu-dusky.vercel.app'); // io نقوم بجلبها من مكتبة socket.io-client في ملف index.html
 
 // Query DOM
 let message = document.getElementById('message'),
