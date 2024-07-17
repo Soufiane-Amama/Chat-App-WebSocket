@@ -8,6 +8,15 @@ let message = document.getElementById('message'),
     output = document.getElementById('output'),
     feedback = document.getElementById('feedback');
 
+
+// Load messages from local storage on page load
+window.addEventListener('load', function() {
+    const messages = JSON.parse(localStorage.getItem('messages')) || [];
+    messages.forEach(data => {
+        output.innerHTML += `<p><strong>${data.handle}:</strong> ${data.message}</p>`;
+    });
+});
+
 // Emit events
 btn.addEventListener('click', function(){
     socket.emit('chat', { // بواسطة emit نقوم بارسال البيانات من العميل الى الخادم عبر WebSockets
@@ -24,6 +33,13 @@ message.addEventListener('keypress', function(){
   
   // Listen for events
   socket.on('chat', function(data){ // استقبال البيانات المرسلة من الخادم
+    // Retrieve messages from local storage
+    let messages = JSON.parse(localStorage.getItem('messages')) || [];
+    // Add new message
+    messages.push(data);
+    // Save messages back to local storage
+    localStorage.setItem('messages', JSON.stringify(messages));
+    // Update the chat output
     feedback.innerHTML = "";
     output.innerHTML += `<p><strong>${data.handle}:</strong> ${data.message}</p>`; // عرض تلك البيانات في الواجهة الامامية
   });
