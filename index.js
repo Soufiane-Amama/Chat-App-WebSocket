@@ -15,6 +15,17 @@ const io = socket(server);
 
 io.on('connection', (socket) => { // حدث الاتصال
   console.log('made socket connection', socket.id);
+  
+  // Handle chat event
+  socket.on('chat', (data) => { // استقبال البيانات من العميل
+      // console.log(data);
+      io.sockets.emit('chat', data); // اعادة ارسال البيانات الى جميع مقابس العملاء المتصلين بغرفة الدردشة
+  });
+  
+  // Handle typing event
+  // socket.on('typing', (data) => {
+  //     socket.broadcast.emit('typing', data);
+  // });
 });
 
 
